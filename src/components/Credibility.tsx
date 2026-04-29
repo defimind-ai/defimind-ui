@@ -2,8 +2,6 @@ type CredItem = {
   label: string;
   value: string;
   href: string;
-  // External-relationship hint for screen readers / SEO. We pass a short
-  // descriptor so the link doesn't read as just "defipy" out of context.
   ariaLabel: string;
 };
 
@@ -66,6 +64,12 @@ export function Credibility() {
             </strong>
             <span aria-hidden>&middot;</span>
             <span>{item.value}</span>
+            <span
+              aria-hidden
+              className="ml-0.5 translate-y-[-1px] text-[0.6875rem] text-[var(--color-text-muted)] transition-all group-hover:translate-x-px group-hover:translate-y-[-2px] group-hover:text-[var(--color-accent)]"
+            >
+              ↗
+            </span>
           </a>
         ))}
       </div>
