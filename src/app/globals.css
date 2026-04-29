@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* DeFiMind palette — backgrounds & surfaces */
+  --color-bg-base: #0A0E1A;
+  --color-bg-elevated: #141A2C;
+  --color-bg-deep: #1F2742;
+
+  /* Text */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B8C2D8;
+  --color-text-muted: #6B7590;
+
+  /* Accents */
+  --color-accent: #5DA8A0;
+  --color-accent-hover: #70C8A8;
+  --color-accent-deep: #3A6A78;
+
+  /* Functional / semantic (held for future use) */
+  --color-warn: #C77575;
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg-base);
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hairline divider helper used across sections */
+.divider-deep {
+  border-color: rgb(58 106 120 / 0.25);
+}
