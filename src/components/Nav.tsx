@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export function Nav() {
   return (
-    <nav className="sticky top-0 z-50 border-b border-[rgb(58_106_120/0.2)] bg-[rgb(10_14_26/0.85)] backdrop-blur">
-      <div className="mx-auto flex h-28 max-w-[1100px] items-center justify-between px-8">
+    <nav className="sticky top-0 z-50 border-b border-[rgb(58_106_120/0.2)] bg-[rgb(10_14_26/0.85)] px-8 backdrop-blur">
+      <div className="mx-auto flex h-28 max-w-[1100px] items-center justify-between">
         <Link
           href="/"
           className="flex items-center gap-4 text-[1.5rem] font-medium tracking-tight text-[var(--color-text-primary)]"
