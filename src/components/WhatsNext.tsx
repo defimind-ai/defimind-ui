@@ -1,7 +1,7 @@
 export function WhatsNext() {
   return (
-    <div className="border-t border-[rgb(58_106_120/0.2)] py-14">
-      <div className="mx-auto flex max-w-[1100px] flex-wrap items-baseline gap-x-8 gap-y-3 px-8">
+    <div className="border-t border-[rgb(58_106_120/0.2)] px-8 py-14">
+      <div className="mx-auto flex max-w-[1100px] flex-wrap items-baseline gap-x-8 gap-y-3">
         <div className="shrink-0 text-xs font-medium uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
           What&rsquo;s next
         </div>

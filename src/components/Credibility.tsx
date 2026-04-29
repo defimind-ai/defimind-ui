@@ -48,8 +48,8 @@ const items: CredItem[] = [
 
 export function Credibility() {
   return (
-    <div className="border-y border-[rgb(58_106_120/0.25)] py-7">
-      <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-center gap-x-5 gap-y-4 px-8 md:justify-between md:gap-x-4">
+    <div className="border-y border-[rgb(58_106_120/0.25)] px-8 py-7">
+      <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-center gap-x-5 gap-y-4 md:justify-between md:gap-x-4">
         {items.map((item) => (
           <a
             key={item.label}
