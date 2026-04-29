@@ -17,7 +17,9 @@ export function Nav() {
             priority
             className="h-14 w-14 shrink-0"
           />
-          <span>defimind.ai</span>
+          <span>
+            defimind<span className="text-[var(--color-accent)]">.</span>ai
+          </span>
         </Link>
         <ul className="flex gap-8 text-sm text-[var(--color-text-secondary)]">
           <li>
