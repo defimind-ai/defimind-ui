@@ -49,7 +49,7 @@ const items: CredItem[] = [
 export function Credibility() {
   return (
     <div className="border-y border-[rgb(58_106_120/0.25)] py-7">
-      <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between gap-x-8 gap-y-6 px-8">
+      <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-center gap-x-5 gap-y-4 px-8 md:justify-between md:gap-x-4">
         {items.map((item) => (
           <a
             key={item.label}
@@ -57,7 +57,7 @@ export function Credibility() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={item.ariaLabel}
-            className="group flex items-baseline gap-1.5 text-[0.8125rem] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-secondary)]"
+            className="group flex shrink-0 items-baseline gap-1.5 whitespace-nowrap text-[0.78125rem] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-secondary)]"
           >
             <strong className="font-medium text-[var(--color-text-secondary)] transition-colors group-hover:text-[var(--color-accent)]">
               {item.label}
