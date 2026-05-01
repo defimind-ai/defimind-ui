@@ -1,8 +1,14 @@
 import type { ReactNode } from "react";
 
+// Section eyebrow — the small-caps category label above each section title.
+// Sized at text-2xl (24px) to make Services / Method / Research / About /
+// Contact register clearly when scanning the page top to bottom. Letter-
+// spacing dialed back from 0.12em to 0.08em because tighter tracking reads
+// better at larger type sizes — the wide tracking that works at 12px starts
+// looking sparse at 24px.
 export function SectionEyebrow({ children }: { children: ReactNode }) {
   return (
-    <div className="mb-5 text-xs font-medium uppercase tracking-[0.12em] text-[var(--color-accent)]">
+    <div className="mb-6 text-2xl font-medium uppercase tracking-[0.08em] text-[var(--color-accent)]">
       {children}
     </div>
   );
