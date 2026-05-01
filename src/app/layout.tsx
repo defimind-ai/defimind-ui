@@ -69,7 +69,7 @@ const jsonLd = {
       name: "DeFiMind",
       legalName: "DeFiMind Inc.",
       url: "https://defimind.ai",
-      email: "contact@defimind.ai",
+      email: "imoore@defimind.ai",
       description:
         "Productized quantitative DeFi analysis practice. LP audits, DAO treasury reviews, pool health assessments. Methodology powered by defipy.",
       founder: { "@id": "https://defimind.ai/#person" },

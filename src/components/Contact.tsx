@@ -20,14 +20,14 @@ export function Contact() {
               LP Audits &amp; Pool Health
             </h3>
             <p className="mb-6 text-[0.9375rem] leading-[1.6] text-[var(--color-text-secondary)]">
-              Email contact@defimind.ai with the position or pool address and
+              Email imoore@defimind.ai with the position or pool address and
               your inputs. Reply within 24 hours.
             </p>
             <a
-              href="mailto:contact@defimind.ai"
+              href="mailto:imoore@defimind.ai"
               className="border-b border-[rgb(93_168_160/0.3)] pb-px text-[0.9375rem] font-medium text-[var(--color-accent)] transition-colors hover:border-[var(--color-accent)]"
             >
-              contact@defimind.ai &rarr;
+              imoore@defimind.ai &rarr;
             </a>
           </div>
 

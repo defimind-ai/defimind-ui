@@ -24,6 +24,14 @@ export function Nav() {
         <ul className="flex gap-8 text-sm text-[var(--color-text-secondary)]">
           <li>
             <a
+              href="#services"
+              className="transition-colors hover:text-[var(--color-accent)]"
+            >
+              Services
+            </a>
+          </li>
+          <li>
+            <a
               href="#method"
               className="transition-colors hover:text-[var(--color-accent)]"
             >
@@ -32,10 +40,10 @@ export function Nav() {
           </li>
           <li>
             <a
-              href="#work"
+              href="#about"
               className="transition-colors hover:text-[var(--color-accent)]"
             >
-              Work
+              About
             </a>
           </li>
           <li>

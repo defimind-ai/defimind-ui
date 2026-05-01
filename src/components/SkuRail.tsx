@@ -46,9 +46,9 @@ const skus: Sku[] = [
 
 export function SkuRail() {
   return (
-    <section id="work" className="px-8 py-28">
+    <section id="services" className="px-8 py-28">
       <div className="mx-auto max-w-[1100px]">
-        <SectionEyebrow>Engagements</SectionEyebrow>
+        <SectionEyebrow>Services</SectionEyebrow>
         <SectionTitle>
           Three productized services. Fixed price, fixed scope, fast turnaround.
         </SectionTitle>

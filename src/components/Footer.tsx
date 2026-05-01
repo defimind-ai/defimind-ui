@@ -31,10 +31,10 @@ export function Footer() {
             </strong>{" "}
             &middot;{" "}
             <a
-              href="mailto:contact@defimind.ai"
+              href="mailto:imoore@defimind.ai"
               className="border-b border-[rgb(107_117_144/0.3)] text-[var(--color-text-secondary)]"
             >
-              contact@defimind.ai
+              imoore@defimind.ai
             </a>
           </p>
           <p>

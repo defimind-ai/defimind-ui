@@ -18,10 +18,10 @@ export function Hero() {
             Request an audit
           </a>
           <a
-            href="#"
+            href="#services"
             className="inline-flex items-center justify-center rounded-md border border-[var(--color-accent-deep)] bg-transparent px-6 py-3 text-[0.9375rem] font-medium text-[var(--color-text-secondary)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
           >
-            See sample report
+            See services
           </a>
         </div>
       </div>
