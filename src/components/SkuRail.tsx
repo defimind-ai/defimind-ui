@@ -1,7 +1,8 @@
 import { SectionEyebrow, SectionLede, SectionTitle } from "./SectionPrimitives";
 import { SkuCard, type Sku } from "./SkuCard";
+import { WideSkuCard } from "./WideSkuCard";
 
-const skus: Sku[] = [
+const productizedSkus: Sku[] = [
   {
     name: "LP Position Audit",
     description:
@@ -44,23 +45,46 @@ const skus: Sku[] = [
   },
 ];
 
+const customSku: Sku = {
+  name: "DeFi Quant Consulting",
+  description:
+    "Scoped engagements for work that doesn\u2019t fit the productized services above \u2014 recurring monitoring, agent-augmented analytics, advisory retainers, custom risk modeling, or larger reviews. Discovery call first; scope, timeline, and price agreed before any work begins.",
+  coverage:
+    "Common shapes: monthly treasury monitoring, agent strategy review, custom AMM modeling, fund-level due diligence, expert-witness or advisory retainer.",
+  specs: [
+    { label: "Deliverable", value: "Scoped on call" },
+    { label: "Turnaround", value: "Per scope" },
+    { label: "Price", value: "Quoted", isPrice: true },
+  ],
+  ctaLabel: "Book a discovery call",
+  ctaHref: "#contact",
+};
+
 export function SkuRail() {
   return (
     <section id="services" className="px-8 py-28">
       <div className="mx-auto max-w-[1100px]">
         <SectionEyebrow>Services</SectionEyebrow>
         <SectionTitle>
-          Three productized services. Fixed price, fixed scope, fast turnaround.
+          Three productized services. One scoped engagement path for everything
+          else.
         </SectionTitle>
         <SectionLede>
-          Each engagement contracted through DeFiMind Inc. Reports delivered as
-          branded PDFs, with methodology citations and reproducibility notes.
+          Productized services are fixed-price and fixed-scope. Custom
+          engagements are scoped on a discovery call. All engagements
+          contracted through DeFiMind Inc.
         </SectionLede>
 
+        {/* Row 1: three productized SKUs */}
         <div className="mt-14 grid gap-5 md:grid-cols-3">
-          {skus.map((sku) => (
+          {productizedSkus.map((sku) => (
             <SkuCard key={sku.name} sku={sku} />
           ))}
+        </div>
+
+        {/* Row 2: scoped engagement, full-width */}
+        <div className="mt-5">
+          <WideSkuCard sku={customSku} />
         </div>
       </div>
     </section>

@@ -40,6 +40,14 @@ export function Nav() {
           </li>
           <li>
             <a
+              href="#research"
+              className="transition-colors hover:text-[var(--color-accent)]"
+            >
+              Research
+            </a>
+          </li>
+          <li>
+            <a
               href="#about"
               className="transition-colors hover:text-[var(--color-accent)]"
             >
