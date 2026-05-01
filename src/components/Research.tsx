@@ -11,7 +11,7 @@ type Paper = {
 };
 
 // Ordered chronologically (oldest first) so the date column reads left-to-right
-// as a timeline. The publication arc — May 2021 → April 2026 → April 2026
+// as a timeline. The publication arc — May 2021 → April 2026 → May 2026
 // (forthcoming) — is itself the strongest qualifying signal in this section,
 // independent of the papers' content. Surface it.
 const papers: Paper[] = [
@@ -38,7 +38,7 @@ const papers: Paper[] = [
     title:
       "Append-Only On-Chain Registries: A Formal and Stochastic Cost Analysis of Parent-Hash DAG and Incremental Merkle Tree Primitives",
     authors: "Ian C. Moore, Fernando Paredes Garc\u00eda",
-    date: "April 2026",
+    date: "May 2026",
     venue: "Forthcoming",
     blurb:
       "Formal and stochastic cost analysis of the two dominant append-only registry primitives. Establishes O(1) gas complexity for parent-hash DAG, derives closed-form moments for incremental Merkle tree per-insert cost, and locates the empirical crossover at depth 5\u20136 across deployments on Base.",
