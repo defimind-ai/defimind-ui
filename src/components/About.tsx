@@ -36,15 +36,20 @@ export function About() {
 
           <p>
             PhD in Engineering Mathematics from Queen&rsquo;s University, with a
-            specialization in time-series analysis. Four years as Chief Data
-            Scientist at{" "}
+            specialization in time-series analysis. Four years as Research
+            Scientist at the{" "}
             <strong className="font-medium text-[var(--color-text-primary)]">
-              SYS Labs / Syscoin Foundation
+              Syscoin Foundation
             </strong>{" "}
             (2021&ndash;2025) &mdash; first on Bitcoin L2 architecture, then on
             AMM mechanics across Uniswap V2/V3, Balancer, and Curve. Five years
             of peer-style preprints on EIP-1559 dynamics, on-chain provenance,
-            and the cost analysis of append-only registry primitives.
+            and the cost analysis of append-only registry primitives. Selected
+            speaker at{" "}
+            <strong className="font-medium text-[var(--color-text-primary)]">
+              ETH Denver 2024
+            </strong>{" "}
+            on protocol-level liquidity research.
           </p>
 
           <p>
