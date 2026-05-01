@@ -36,10 +36,15 @@ export function About() {
 
           <p>
             PhD in Engineering Mathematics from Queen&rsquo;s University, with a
-            specialization in time-series analysis. Five years of focused DeFi
-            research since 2021, including peer-style preprints on EIP-1559
-            dynamics, on-chain provenance, and the cost analysis of append-only
-            registry primitives.
+            specialization in time-series analysis. Four years as Chief Data
+            Scientist at{" "}
+            <strong className="font-medium text-[var(--color-text-primary)]">
+              SYS Labs / Syscoin Foundation
+            </strong>{" "}
+            (2021&ndash;2025) &mdash; first on Bitcoin L2 architecture, then on
+            AMM mechanics across Uniswap V2/V3, Balancer, and Curve. Five years
+            of peer-style preprints on EIP-1559 dynamics, on-chain provenance,
+            and the cost analysis of append-only registry primitives.
           </p>
 
           <p>
@@ -52,11 +57,11 @@ export function About() {
             Specialist at the{" "}
             <strong className="font-medium text-[var(--color-text-primary)]">
               Government of Ontario
-            </strong>{" "}
-            informing over $200M in long-term capital allocation through
-            time-series forecasting models. Peer-reviewed publications in
-            applied harmonic analysis (over 170 citations), biostatistics, and
-            anesthesiology. Adjunct Lecturer in Biostatistics at the{" "}
+            </strong>
+            , building statistical and time-series models that informed over
+            $200M in long-term capital allocation. Peer-reviewed publications
+            in applied harmonic analysis (over 170 citations), biostatistics,
+            and anesthesiology. Adjunct Lecturer in Biostatistics at the{" "}
             <strong className="font-medium text-[var(--color-text-primary)]">
               University of Toronto
             </strong>
