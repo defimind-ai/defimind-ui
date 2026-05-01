@@ -44,11 +44,23 @@ export function About() {
 
           <p>
             Prior to DeFi, fifteen years as a senior data scientist and applied
-            mathematician &mdash; lead and senior roles spanning IIOT, machine
-            learning, and statistical modeling. Peer-reviewed publications in
+            mathematician. Senior Data Scientist at{" "}
+            <strong className="font-medium text-[var(--color-text-primary)]">
+              GE Digital
+            </strong>{" "}
+            working on the Predix industrial IoT platform; Forecasting
+            Specialist at the{" "}
+            <strong className="font-medium text-[var(--color-text-primary)]">
+              Government of Ontario
+            </strong>{" "}
+            informing over $200M in long-term capital allocation through
+            time-series forecasting models. Peer-reviewed publications in
             applied harmonic analysis (over 170 citations), biostatistics, and
-            anesthesiology. Adjunct Lecturer in Biostatistics at the University
-            of Toronto, 2010&ndash;2014.
+            anesthesiology. Adjunct Lecturer in Biostatistics at the{" "}
+            <strong className="font-medium text-[var(--color-text-primary)]">
+              University of Toronto
+            </strong>
+            , 2010&ndash;2014.
           </p>
 
           <p>
