@@ -1,4 +1,4 @@
-import { SectionEyebrow, SectionTitle } from "./SectionPrimitives";
+import { SectionEyebrow } from "./SectionPrimitives";
 
 export function About() {
   return (
@@ -8,7 +8,21 @@ export function About() {
     >
       <div className="mx-auto max-w-[1100px]">
         <SectionEyebrow>About</SectionEyebrow>
-        <SectionTitle>Ian Moore, PhD &mdash; Principal, DeFiMind</SectionTitle>
+
+        {/*
+          Two-line title block: name on top, role underneath.
+          The role line is rendered in the teal accent at a smaller size so it
+          reads as a sub-title rather than a competing headline. Same overall
+          visual weight as a one-line SectionTitle but with cleaner stacking.
+        */}
+        <div className="mb-8 max-w-[28ch]">
+          <h2 className="text-[clamp(1.75rem,3.5vw,2.5rem)] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--color-text-primary)]">
+            Ian Moore, PhD
+          </h2>
+          <p className="mt-2 text-[clamp(1rem,1.5vw,1.25rem)] font-medium tracking-[0.01em] text-[var(--color-accent)]">
+            Principal, DeFiMind
+          </p>
+        </div>
 
         <div className="max-w-[62ch] space-y-5 text-base leading-[1.75] text-[var(--color-text-secondary)]">
           <p>
@@ -32,8 +46,7 @@ export function About() {
             Prior to DeFi, fifteen years as a senior data scientist and applied
             mathematician &mdash; lead and senior roles spanning IIOT, machine
             learning, and statistical modeling. Peer-reviewed publications in
-            applied harmonic analysis (over 170 citations on a 2004 paper on
-            prolate spheroidal wave functions), biostatistics, and
+            applied harmonic analysis (over 170 citations), biostatistics, and
             anesthesiology. Adjunct Lecturer in Biostatistics at the University
             of Toronto, 2010&ndash;2014.
           </p>
