@@ -53,7 +53,7 @@ export function About() {
           </p>
 
           <p>
-            Prior to DeFi, fifteen years as a senior data scientist and applied
+            Prior to DeFi, ten years as a senior data scientist and applied
             mathematician. Senior Data Scientist at{" "}
             <strong className="font-medium text-[var(--color-text-primary)]">
               GE Digital

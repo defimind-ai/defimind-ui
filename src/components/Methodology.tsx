@@ -27,7 +27,7 @@ export function Methodology() {
   return (
     <section id="method" className="px-8 py-28">
       <div className="mx-auto max-w-[1100px]">
-        <SectionEyebrow>Methodology</SectionEyebrow>
+        <SectionEyebrow>Method</SectionEyebrow>
         <SectionTitle>The math is open. The reports are paid.</SectionTitle>
 
         <div className="text-base leading-[1.75] text-[var(--color-text-secondary)]">

@@ -40,7 +40,9 @@ export function Contact() {
               timeline, and price before any commitment.
             </p>
             <a
-              href="#"
+              href="https://calendly.com/imoore-defimind"
+              target="_blank"
+              rel="noopener noreferrer"
               className="border-b border-[rgb(93_168_160/0.3)] pb-px text-[0.9375rem] font-medium text-[var(--color-accent)] transition-colors hover:border-[var(--color-accent)]"
             >
               Book a call &rarr;
