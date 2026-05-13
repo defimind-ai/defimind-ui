@@ -11,9 +11,9 @@ type Paper = {
 };
 
 // Ordered chronologically (oldest first) so the date column reads left-to-right
-// as a timeline. The publication arc — May 2021 → April 2026 → May 2026
-// (forthcoming) — is itself the strongest qualifying signal in this section,
-// independent of the papers' content. Surface it.
+// as a timeline. The publication arc — May 2021 → April 2026 → May 2026 (live)
+// → June 2026 (forthcoming) — is itself a strong qualifying signal in this
+// section, independent of the papers' content. Surface it.
 const papers: Paper[] = [
   {
     title: "Stochastic Properties of EIP-1559 Basefees",
@@ -36,9 +36,19 @@ const papers: Paper[] = [
   },
   {
     title:
+      "State Twins: An Off-Chain Substrate for Agentic Reasoning over Decentralized Finance Protocols",
+    authors: "Ian C. Moore",
+    date: "May 2026",
+    venue: "arXiv 2605.11522",
+    blurb:
+      "Introduces the State Twin: a typed, in-memory, replayable off-chain substrate for agentic reasoning over AMM protocols. Decouples reasoning from chain time and admits operations on-chain state cannot \u2014 forking, replay, counterfactual rollout. Ships in DeFiPy v2 with a reference Model Context Protocol server exposing typed analytical primitives as LLM tools; the same primitive serves a notebook quant, a backtest, and an LLM agent without modification.",
+    href: "https://arxiv.org/abs/2605.11522",
+  },
+  {
+    title:
       "Append-Only On-Chain Registries: A Formal and Stochastic Cost Analysis of Parent-Hash DAG and Incremental Merkle Tree Primitives",
     authors: "Ian C. Moore, Fernando Paredes Garc\u00eda",
-    date: "May 2026",
+    date: "June 2026",
     venue: "Forthcoming",
     blurb:
       "Formal and stochastic cost analysis of the two dominant append-only registry primitives. Establishes O(1) gas complexity for parent-hash DAG, derives closed-form moments for incremental Merkle tree per-insert cost, and locates the empirical crossover at depth 5\u20136 across deployments on Base.",
@@ -58,13 +68,13 @@ export function Research() {
           Five years of peer-style research underpinning the practice.
         </SectionTitle>
         <SectionLede>
-          Preprints on the math behind on-chain registries, provenance, and
-          gas-cost dynamics &mdash; published since 2021. The methodology in
-          DeFiMind engagements draws from this work; the work draws from the
-          engagements.
+          Preprints on the math behind on-chain registries, provenance, agentic
+          DeFi substrates, and gas-cost dynamics &mdash; published since 2021.
+          The methodology in DeFiMind engagements draws from this work; the
+          work draws from the engagements.
         </SectionLede>
 
-        <ul className="mt-12 grid list-none gap-5 md:grid-cols-3">
+        <ul className="mt-12 grid list-none gap-5 md:grid-cols-2">
           {papers.map((paper) => (
             <PaperCard key={paper.title} paper={paper} />
           ))}
