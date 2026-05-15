@@ -27,10 +27,10 @@ const items: CredItem[] = [
   },
   {
     label: "arXiv",
-    value: "2604.03434",
-    href: "https://arxiv.org/abs/2604.03434",
+    value: "2605.11522",
+    href: "https://arxiv.org/abs/2605.11522",
     ariaLabel:
-      "arXiv 2604.03434 — Trustless Provenance Trees: A Game-Theoretic Framework",
+      "arXiv 2605.11522 — State Twins: An Off-Chain Substrate for Agentic Reasoning over DeFi Protocols",
   },
   {
     label: "PhD",
