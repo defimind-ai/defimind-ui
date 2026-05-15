@@ -14,15 +14,16 @@ const items: CredItem[] = [
   },
   {
     label: "ETH Denver 2024",
-    value: "Speaker",
+    value: "Selected Speaker",
     href: "https://www.youtube.com/watch?v=irUM-aB9UFk",
-    ariaLabel: "ETH Denver 2024 talk — Pachira: Liquidity Tree Protocol",
+    ariaLabel:
+      "ETH Denver 2024 — selected speaker on protocol-level liquidity research",
   },
   {
-    label: "Book + courses",
-    value: "Published",
+    label: "Courses",
+    value: "Live",
     href: "https://defipy.thinkific.com/products/courses/foundations",
-    ariaLabel: "Published book and courses on quantitative DeFi methods",
+    ariaLabel: "Live courses on quantitative DeFi methods",
   },
   {
     label: "arXiv",
@@ -39,10 +40,10 @@ const items: CredItem[] = [
   },
   {
     label: "Former",
-    value: "CDS, Syscoin",
+    value: "Syscoin Foundation",
     href: "https://syscoin.org/news/dr-ian-moore",
     ariaLabel:
-      "Former Chief Data Scientist at Syscoin / SYS Labs — announcement",
+      "Former Research Scientist at the Syscoin Foundation — announcement",
   },
 ];
 
