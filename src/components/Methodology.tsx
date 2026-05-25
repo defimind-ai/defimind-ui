@@ -46,7 +46,7 @@ export function Methodology() {
                 defipy
               </strong>{" "}
               &mdash; our open-source DeFi analytics library, maintained on
-              GitHub with 50,000+ downloads across two years. Full coverage of
+              GitHub with 55,000+ downloads across two years. Full coverage of
               Uniswap V2 and V3, Balancer weighted pools, and Curve-style
               stableswaps.
             </p>

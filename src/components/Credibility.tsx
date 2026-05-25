@@ -8,9 +8,9 @@ type CredItem = {
 const items: CredItem[] = [
   {
     label: "defipy",
-    value: "50K+ downloads",
+    value: "55K+ downloads",
     href: "https://defipy.org",
-    ariaLabel: "defipy — 50,000+ downloads, open-source DeFi analytics library",
+    ariaLabel: "defipy — 55,000+ downloads, open-source DeFi analytics library",
   },
   {
     label: "ETH Denver 2024",

@@ -46,7 +46,7 @@ const papers: Paper[] = [
   },
   {
     title:
-      "Append-Only On-Chain Registries: A Formal and Stochastic Cost Analysis of Parent-Hash DAG and Incremental Merkle Tree Primitives",
+      "Parent-Hash DAG: A Cost Analysis of Constant-Time Append for On-Chain Registries",
     authors: "Ian C. Moore, Fernando Paredes Garc\u00eda",
     date: "June 2026",
     venue: "Forthcoming",
