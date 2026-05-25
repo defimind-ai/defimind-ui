@@ -1,7 +1,7 @@
 const links = [
   { label: "GitHub", href: "https://github.com/defipy-devs" },
   { label: "defipy.org", href: "https://defipy.org" },
-  { label: "arXiv", href: "https://arxiv.org/abs/2604.03434" },
+  { label: "arXiv", href: "https://arxiv.org/abs/2605.11522" },
   { label: "Medium", href: "https://medium.com/@ic3moore" },
   { label: "X", href: "https://x.com/ic3moore" },
   { label: "LinkedIn", href: "https://www.linkedin.com/company/defimind-ai" },

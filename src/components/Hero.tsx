@@ -7,7 +7,7 @@ export function Hero() {
         </h1>
         <p className="mb-10 max-w-[55ch] text-lg leading-[1.6] text-[var(--color-text-secondary)]">
           PhD-grade liquidity-position analysis powered by defipy &mdash; our
-          open-source AMM analytics library with 50,000+ downloads. Fixed-price
+          open-source AMM analytics library with 55,000+ downloads. Fixed-price
           reports. Operator sign-off. Methodology you can verify.
         </p>
         <div className="flex flex-wrap gap-3.5">

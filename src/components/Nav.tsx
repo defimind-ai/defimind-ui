@@ -1,12 +1,25 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 
 export function Nav() {
+  // Logo click handler: scroll to top of the page smoothly. Using a click
+  // handler rather than <Link href="/"> because Next.js App Router treats
+  // clicks on Link components pointing to the current route as no-ops, which
+  // means the logo would otherwise do nothing on a single-page site. Smooth
+  // scroll matches the in-page anchor link behavior on the rest of the nav.
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <nav className="sticky top-0 z-50 border-b border-[rgb(58_106_120/0.2)] bg-[rgb(10_14_26/0.85)] px-8 backdrop-blur">
       <div className="mx-auto flex h-28 max-w-[1100px] items-center justify-between">
-        <Link
-          href="/"
+        <a
+          href="#"
+          onClick={handleLogoClick}
+          aria-label="Scroll to top"
           className="flex items-center gap-4 text-[1.5rem] font-medium tracking-tight text-[var(--color-text-primary)]"
         >
           <Image
@@ -20,7 +33,7 @@ export function Nav() {
           <span>
             defimind<span className="text-[var(--color-accent)]">.</span>ai
           </span>
-        </Link>
+        </a>
         <ul className="flex gap-8 text-sm text-[var(--color-text-secondary)]">
           <li>
             <a
