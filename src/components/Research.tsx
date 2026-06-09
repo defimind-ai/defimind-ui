@@ -11,9 +11,9 @@ type Paper = {
 };
 
 // Ordered chronologically (oldest first) so the date column reads left-to-right
-// as a timeline. The publication arc — May 2021 → April 2026 → May 2026 (live)
-// → June 2026 (forthcoming) — is itself a strong qualifying signal in this
-// section, independent of the papers' content. Surface it.
+// as a timeline. The publication arc — May 2021 → April 2026 → May 2026
+// → June 2026 — is itself a strong qualifying signal in this section,
+// independent of the papers' content. All four papers now live on arXiv.
 const papers: Paper[] = [
   {
     title: "Stochastic Properties of EIP-1559 Basefees",
@@ -49,10 +49,10 @@ const papers: Paper[] = [
       "Parent-Hash DAG: A Cost Analysis of Constant-Time Append for On-Chain Registries",
     authors: "Ian C. Moore, Fernando Paredes Garc\u00eda",
     date: "June 2026",
-    venue: "Forthcoming",
+    venue: "arXiv 2606.09593",
     blurb:
       "Formal and stochastic cost analysis of the two dominant append-only registry primitives. Establishes O(1) gas complexity for parent-hash DAG, derives closed-form moments for incremental Merkle tree per-insert cost, and locates the empirical crossover at depth 5\u20136 across deployments on Base.",
-    forthcoming: true,
+    href: "https://arxiv.org/abs/2606.09593",
   },
 ];
 
