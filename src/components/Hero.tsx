@@ -34,14 +34,13 @@ export function Hero() {
           className="group mt-8 inline-flex max-w-[55ch] items-center gap-3 rounded-lg border border-[rgb(58_106_120/0.35)] bg-[var(--color-bg-elevated)] px-5 py-3.5 transition-colors hover:border-[var(--color-accent)]"
         >
           <span className="shrink-0 rounded-sm bg-[rgb(93_168_160/0.15)] px-2 py-0.5 text-[0.7rem] font-medium uppercase tracking-wide text-[var(--color-accent)]">
-            Free
+            Live
           </span>
           <span className="text-[0.9375rem] leading-[1.5] text-[var(--color-text-secondary)]">
             <strong className="font-medium text-[var(--color-text-primary)]">
               MCP endpoint
             </strong>{" "}
-            &mdash; live Uniswap V2/V3 analysis in Claude, Cursor &amp; any MCP
-            client
+            &mdash; Uniswap V2/V3 analysis in Claude, Cursor &amp; any MCP client
           </span>
           <span className="ml-auto shrink-0 text-[var(--color-accent)] transition-transform group-hover:translate-x-0.5">
             &rarr;
