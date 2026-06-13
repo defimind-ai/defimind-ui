@@ -10,7 +10,7 @@ import {
 export const metadata: Metadata = {
   title: "MCP Endpoint",
   description:
-    "Live Uniswap V2/V3 LP analytics over the Model Context Protocol — position PnL, price scenarios, pool health, rug signals, slippage. Authless, bring-your-own-RPC, powered by open-source defipy.",
+    "API reference for the DeFiMind MCP endpoint — five live Uniswap V2/V3 LP-analysis tools over the Model Context Protocol. Authless, bring-your-own-RPC, powered by open-source defipy.",
   alternates: { canonical: "/mcp" },
   openGraph: {
     type: "website",
@@ -18,58 +18,214 @@ export const metadata: Metadata = {
     siteName: "DeFiMind",
     title: "MCP Endpoint — DeFiMind",
     description:
-      "Live Uniswap V2/V3 LP analytics over MCP — position PnL, price scenarios, pool health, rug signals, slippage. Authless, bring-your-own-RPC.",
+      "API reference for the DeFiMind MCP endpoint — five live Uniswap V2/V3 LP-analysis tools. Authless, bring-your-own-RPC.",
   },
 };
 
 const ENDPOINT = "https://mcp.defimind.ai/mcp";
 
-const tools: { name: string; desc: string; query: string }[] = [
+// ─── Reference data ──────────────────────────────────────────────────────────
+
+type Field = {
+  name: string;
+  type: string;
+  req?: boolean;
+  scope?: string;
+  note: string;
+};
+
+const commonParams: Field[] = [
   {
-    name: "AnalyzePosition",
-    desc: "PnL decomposition for a V2/V3 LP position — impermanent loss, accumulated fees, and net result.",
-    query: "Analyze my position in this Uniswap V3 USDC/ETH pool.",
+    name: "pool_address",
+    type: "string",
+    req: true,
+    note: "On-chain address of the Uniswap pool/pair. Lowercase, uppercase, or checksum casing all accepted.",
   },
   {
-    name: "SimulatePriceMove",
-    desc: "Project a position's value at a hypothetical price change — new value, IL at the new price, and percentage change.",
-    query: "If ETH drops 30%, what happens to my V3 position?",
+    name: "rpc_url",
+    type: "string",
+    req: true,
+    note: "An Ethereum (or L2) JSON-RPC URL used to read live pool state. You supply it per call; it is never stored or logged.",
   },
   {
-    name: "CheckPoolHealth",
-    desc: "Pool-level snapshot — TVL, reserves, LP concentration, fee tier, and current tick.",
-    query: "Is this V3 pool healthy?",
+    name: "pool_type",
+    type: '"uniswap_v2" | "uniswap_v3"',
+    req: true,
+    note: "Which Uniswap protocol the address belongs to.",
   },
   {
-    name: "DetectRugSignals",
-    desc: "Threshold-based rug-pull signal flags over a pool's on-chain state.",
-    query: "Any rug signals on this V2 pair?",
+    name: "chain_id",
+    type: "integer",
+    note: "Optional guard. If supplied and the RPC reports a different chain, the call is rejected.",
   },
   {
-    name: "CalculateSlippage",
-    desc: "Slippage, price impact, and max trade size for a proposed swap.",
-    query: "How much slippage on a 50,000 USDC buy here?",
+    name: "block_number",
+    type: "integer",
+    note: "Optional. Pin the read to a historical block. Omit to read the latest block.",
   },
 ];
 
-const links: { label: string; href: string }[] = [
+type Tool = {
+  name: string;
+  scope: string;
+  desc: string;
+  query: string;
+  params: Field[];
+  returns: Field[];
+};
+
+const tools: Tool[] = [
   {
-    label: "Official MCP Registry",
-    href: "https://registry.modelcontextprotocol.io/?search=defimind",
+    name: "AnalyzePosition",
+    scope: "V2 · V3",
+    desc: "Decompose an LP position's PnL into impermanent loss, accumulated fees, and net result, measured against the entry basis you provide.",
+    query: "Analyze my position in this Uniswap V3 USDC/ETH pool.",
+    params: [
+      { name: "lp_init_amt", type: "number", req: true, note: "LP tokens held by the position, in human units." },
+      { name: "entry_x_amt", type: "number", req: true, note: "Amount of token0 deposited at entry." },
+      { name: "entry_y_amt", type: "number", req: true, note: "Amount of token1 deposited at entry." },
+      { name: "lwr_tick", type: "integer", scope: "V3", note: "Lower tick of the position range. Omit for full range / V2." },
+      { name: "upr_tick", type: "integer", scope: "V3", note: "Upper tick of the position range. Omit for full range / V2." },
+      { name: "holding_period_days", type: "number", note: "Optional. If supplied, real_apr is annualized from net PnL." },
+    ],
+    returns: [
+      { name: "net_pnl", type: "number", note: "current_value − hold_value, in token0 numeraire." },
+      { name: "il_percentage", type: "number", note: "Pure price-divergence impermanent loss (fraction)." },
+      { name: "fee_income", type: "number", note: "Isolated fee component, in token0 numeraire." },
+      { name: "real_apr", type: "number | null", note: "Annualized net return (null unless holding_period_days given)." },
+      { name: "diagnosis", type: "string", note: '"net_positive" | "fee_compensated" | "il_dominant".' },
+    ],
   },
+  {
+    name: "SimulatePriceMove",
+    scope: "V2 · V3",
+    desc: "Project a position's value at a hypothetical price change from the current pool state. Size-invariant paper value; fee income is not modeled.",
+    query: "If ETH drops 30%, what happens to my V3 position?",
+    params: [
+      { name: "price_change_pct", type: "number", req: true, note: "Fractional change from current price; must be > −1.0. e.g. −0.30 = a 30% drop." },
+      { name: "position_size_lp", type: "number", req: true, note: "LP tokens held, in human units; must be > 0." },
+      { name: "lwr_tick", type: "integer", scope: "V3", note: "Lower tick of the position range." },
+      { name: "upr_tick", type: "integer", scope: "V3", note: "Upper tick of the position range." },
+    ],
+    returns: [
+      { name: "new_value", type: "number", note: "Position value at the simulated price (token0 numeraire)." },
+      { name: "il_at_new_price", type: "number", note: "Impermanent loss at the simulated price (fraction, ≤ 0)." },
+      { name: "value_change_pct", type: "number", note: "Fractional change in position value from current." },
+      { name: "new_price_ratio", type: "number", note: "Alpha = new_price / current_price." },
+      { name: "fee_projection", type: "null", note: "Always null — fee projection is out of scope for this tool." },
+    ],
+  },
+  {
+    name: "CheckPoolHealth",
+    scope: "V2 · V3",
+    desc: "Pool-level snapshot: TVL, reserves, spot price, LP concentration, fee tier, and activity. Answers “would I deposit into this pool?” at the pool level.",
+    query: "Is this V3 pool healthy?",
+    params: [
+      { name: "recent_window", type: "integer", scope: "V2", note: "Rolling window (swap count) for fee_accrual_rate_recent. Default 20; ignored on V3." },
+    ],
+    returns: [
+      { name: "tvl_in_token0 / tvl_in_token1", type: "number", note: "Total value locked in each token numeraire." },
+      { name: "reserve0 / reserve1", type: "number", note: "Decimal-adjusted reserves." },
+      { name: "spot_price", type: "number", note: "Current price of token0 in token1 terms." },
+      { name: "num_lps / top_lp_share_pct", type: "integer / number", note: "LP count and the top LP's share." },
+      { name: "fee_pips / tick_current", type: "integer | null", scope: "V3", note: "Fee tier (pips) and current tick; null on V2." },
+      { name: "num_swaps / fee_accrual_rate_recent", type: "integer | null", scope: "V2", note: "Swap count and recent fee rate; null on V3." },
+    ],
+  },
+  {
+    name: "DetectRugSignals",
+    scope: "V2 · V3",
+    desc: "Threshold-based rug-pull screen composed over pool health: suspiciously low TVL, top-LP concentration, and inactive-pool-with-liquidity.",
+    query: "Any rug signals on this V2 pair?",
+    params: [
+      { name: "lp_concentration_threshold", type: "number", note: "Top-LP share that trips the concentration flag. (0, 1]; default 0.90; pass 1.0 to disable." },
+      { name: "tvl_floor", type: "number", note: "Minimum acceptable TVL in token0; values at/below fire the low-TVL flag. Default 10.0 — override per pair." },
+    ],
+    returns: [
+      { name: "risk_level", type: "string", note: '"low" | "medium" | "high" | "critical" (count-based bucket).' },
+      { name: "signals_detected", type: "integer", note: "Count of fired signals (0–3)." },
+      { name: "tvl_suspiciously_low", type: "boolean", note: "TVL below the floor." },
+      { name: "single_sided_concentration", type: "boolean", note: "One LP owns a dominant share." },
+      { name: "inactive_with_liquidity", type: "boolean", scope: "V2", note: "Liquidity present but no swap activity. Always false on V3." },
+      { name: "details", type: "string[]", note: "Human-readable lines explaining which signals fired." },
+    ],
+  },
+  {
+    name: "CalculateSlippage",
+    scope: "V2 · V3",
+    desc: "Slippage and price-impact decomposition for a proposed swap: spot vs execution price, slippage %, cost, and (V2) the max trade within 1% slippage.",
+    query: "How much slippage on a 50,000 USDC buy here?",
+    params: [
+      { name: "amount_in", type: "number", req: true, note: "Amount of token_in to trade, in human units; must be > 0." },
+      { name: "token_in_name", type: "string", req: true, note: "Symbol of the input token (e.g. \"USDC\", \"WETH\") — must match one of the pool's two tokens." },
+      { name: "lwr_tick", type: "integer", scope: "V3", note: "Lower tick of the active range." },
+      { name: "upr_tick", type: "integer", scope: "V3", note: "Upper tick of the active range." },
+    ],
+    returns: [
+      { name: "slippage_pct", type: "number", note: "Slippage as a fraction of spot." },
+      { name: "price_impact_pct", type: "number", note: "Price impact of the trade." },
+      { name: "spot_price / execution_price", type: "number", note: "Pre-trade spot and realized execution price." },
+      { name: "slippage_cost", type: "number", note: "Cost in output-token units." },
+      { name: "max_size_at_1pct", type: "number | null", scope: "V2", note: "Largest trade staying within 1% slippage; null on V3." },
+    ],
+  },
+];
+
+const errors: { code: string; note: string }[] = [
+  { code: "BadPoolType", note: "pool_type is not uniswap_v2 or uniswap_v3." },
+  { code: "MissingArgument", note: "pool_address, rpc_url, or pool_type was omitted." },
+  { code: "ChainMismatch", note: "Declared chain_id ≠ the chain the RPC reports." },
+  { code: "Error reading pool", note: "RPC unreachable, or the address isn't a contract on that chain." },
+  { code: "Token not found", note: "token_in_name doesn't match either pool token (the error lists the available symbols)." },
+];
+
+const links: { label: string; href: string }[] = [
+  { label: "Official MCP Registry", href: "https://registry.modelcontextprotocol.io/?search=defimind" },
   { label: "Smithery", href: "https://smithery.ai/servers/ic3moore/defimind" },
   { label: "Source (GitHub)", href: "https://github.com/defimind-ai/defimind-mcp" },
   { label: "defipy.org", href: "https://defipy.org" },
   { label: "State Twins paper", href: "https://arxiv.org/abs/2605.11522" },
 ];
 
+// ─── Presentational helpers ──────────────────────────────────────────────────
+
 function CodeBlock({ children }: { children: string }) {
   return (
-    <pre className="overflow-x-auto rounded-md border border-[rgb(58_106_120/0.25)] bg-[var(--color-bg-elevated)] px-4 py-3 font-mono text-[0.85rem] leading-[1.6] text-[var(--color-text-secondary)]">
+    <pre className="overflow-x-auto rounded-md border border-[rgb(58_106_120/0.25)] bg-[var(--color-bg-elevated)] px-4 py-3 font-mono text-[0.82rem] leading-[1.6] text-[var(--color-text-secondary)]">
       <code>{children}</code>
     </pre>
   );
 }
+
+function FieldRow({ field }: { field: Field }) {
+  return (
+    <div className="border-t border-[rgb(58_106_120/0.15)] py-3">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <code className="font-mono text-[0.875rem] font-medium text-[var(--color-text-primary)]">
+          {field.name}
+        </code>
+        <span className="font-mono text-[0.75rem] text-[var(--color-text-muted)]">
+          {field.type}
+        </span>
+        {field.req ? (
+          <span className="rounded-sm bg-[rgb(93_168_160/0.15)] px-1.5 py-0.5 text-[0.65rem] font-medium uppercase tracking-wide text-[var(--color-accent)]">
+            required
+          </span>
+        ) : null}
+        {field.scope ? (
+          <span className="rounded-sm border border-[rgb(58_106_120/0.4)] px-1.5 py-0.5 text-[0.65rem] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+            {field.scope} only
+          </span>
+        ) : null}
+      </div>
+      <p className="mt-1 text-[0.875rem] leading-[1.55] text-[var(--color-text-secondary)]">
+        {field.note}
+      </p>
+    </div>
+  );
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function McpPage() {
   return (
@@ -77,16 +233,16 @@ export default function McpPage() {
       <Nav />
       <main>
         {/* Header */}
-        <section className="px-8 pb-16 pt-36">
+        <section className="px-8 pb-14 pt-36">
           <div className="mx-auto max-w-[1100px]">
             <SectionEyebrow>MCP Endpoint</SectionEyebrow>
             <SectionTitle>DeFiMind, inside your AI client.</SectionTitle>
             <SectionLede>
               A Model Context Protocol endpoint exposing five live Uniswap V2/V3
               LP-analysis tools. Connect from Claude, Cursor, or any
-              MCP-compatible client and ask natural-language questions about real
-              pools &mdash; the agent calls a DeFiMind tool and answers with
-              exact-math backing.
+              MCP-compatible client, then ask in plain language or call the tools
+              directly &mdash; the analytics are exact AMM math, powered by
+              open-source defipy.
             </SectionLede>
 
             <div className="max-w-[640px]">
@@ -104,145 +260,263 @@ export default function McpPage() {
                 Install
               </a>
               <a
-                href="#tools"
+                href="#reference"
                 className="inline-flex items-center justify-center rounded-md border border-[var(--color-accent-deep)] bg-transparent px-6 py-3 text-[0.9375rem] font-medium text-[var(--color-text-secondary)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
               >
-                See the tools
+                API reference
               </a>
             </div>
           </div>
         </section>
 
         {/* Install */}
-        <section
-          id="install"
-          className="border-t border-[rgb(58_106_120/0.2)] px-8 py-24"
-        >
+        <section id="install" className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
           <div className="mx-auto max-w-[1100px]">
             <SectionEyebrow>Install</SectionEyebrow>
             <SectionTitle>Connect in one step.</SectionTitle>
             <SectionLede>
-              The endpoint is authless &mdash; no account, no API key. You supply
-              an Ethereum RPC URL per call (bring-your-own-RPC); nothing is stored
-              or logged.
+              Authless &mdash; no account, no API key. You supply an Ethereum RPC
+              URL per call (bring-your-own-RPC); nothing is stored or logged.
             </SectionLede>
 
-            <div className="space-y-10">
+            <div className="space-y-8">
               <div>
                 <h3 className="mb-3 text-base font-medium text-[var(--color-text-primary)]">
                   Claude Code
                 </h3>
                 <CodeBlock>{`claude mcp add --transport http defimind ${ENDPOINT}`}</CodeBlock>
               </div>
-
               <div>
                 <h3 className="mb-3 text-base font-medium text-[var(--color-text-primary)]">
                   Claude Desktop
                 </h3>
                 <p className="text-[0.9375rem] leading-[1.65] text-[var(--color-text-secondary)]">
-                  Settings &rarr; Connectors &rarr; Add custom connector. Use the
+                  Settings &rarr; Connectors &rarr; Add custom connector, using the
                   endpoint URL above.
                 </p>
               </div>
-
               <div>
                 <h3 className="mb-3 text-base font-medium text-[var(--color-text-primary)]">
                   Cursor
                 </h3>
                 <p className="text-[0.9375rem] leading-[1.65] text-[var(--color-text-secondary)]">
                   Settings &rarr; MCP &rarr; Add new MCP server. Name{" "}
-                  <span className="font-mono text-[var(--color-text-primary)]">
-                    defimind
-                  </span>
-                  , type{" "}
-                  <span className="font-mono text-[var(--color-text-primary)]">
-                    http
-                  </span>
-                  , URL the endpoint above.
+                  <span className="font-mono text-[var(--color-text-primary)]">defimind</span>,
+                  type <span className="font-mono text-[var(--color-text-primary)]">http</span>,
+                  URL the endpoint above.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Tools */}
-        <section
-          id="tools"
-          className="border-t border-[rgb(58_106_120/0.2)] px-8 py-24"
-        >
+        {/* Quickstart */}
+        <section id="quickstart" className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
           <div className="mx-auto max-w-[1100px]">
-            <SectionEyebrow>Tools</SectionEyebrow>
-            <SectionTitle>Five live V2/V3 tools.</SectionTitle>
+            <SectionEyebrow>Quickstart</SectionEyebrow>
+            <SectionTitle>A first call.</SectionTitle>
             <SectionLede>
-              Each tool takes a{" "}
-              <span className="font-mono text-[var(--color-text-primary)]">
-                pool_address
-              </span>
-              , an{" "}
-              <span className="font-mono text-[var(--color-text-primary)]">
-                rpc_url
-              </span>
-              , and a{" "}
-              <span className="font-mono text-[var(--color-text-primary)]">
-                pool_type
-              </span>{" "}
-              (uniswap_v2 | uniswap_v3), plus an optional{" "}
-              <span className="font-mono text-[var(--color-text-primary)]">
-                chain_id
-              </span>{" "}
-              guard and{" "}
-              <span className="font-mono text-[var(--color-text-primary)]">
-                block_number
-              </span>{" "}
-              pin.
+              Once connected, ask a natural-language question and the agent picks
+              the tool and fills the arguments &mdash; or call a tool directly with
+              an arguments object like this:
             </SectionLede>
 
-            <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
-              {tools.map((tool) => (
-                <div key={tool.name}>
-                  <h3 className="mb-2 font-mono text-[0.95rem] font-medium text-[var(--color-accent)]">
-                    {tool.name}
-                  </h3>
-                  <p className="mb-3 text-[0.9375rem] leading-[1.65] text-[var(--color-text-secondary)]">
-                    {tool.desc}
-                  </p>
-                  <p className="border-l-2 border-[var(--color-accent-deep)] pl-3 text-[0.9375rem] italic leading-[1.6] text-[var(--color-text-muted)]">
-                    {tool.query}
-                  </p>
-                </div>
-              ))}
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-3 text-[0.95rem] font-medium text-[var(--color-text-primary)]">
+                  Tool call &mdash; CheckPoolHealth on a mainnet V3 pool
+                </h3>
+                <CodeBlock>{`{
+  "name": "CheckPoolHealth",
+  "arguments": {
+    "pool_address": "0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640",
+    "rpc_url": "https://ethereum-rpc.publicnode.com",
+    "pool_type": "uniswap_v3"
+  }
+}`}</CodeBlock>
+              </div>
+              <div>
+                <h3 className="mb-3 text-[0.95rem] font-medium text-[var(--color-text-primary)]">
+                  Response (abridged)
+                </h3>
+                <CodeBlock>{`{
+  "version": "V3",
+  "spot_price": 0.000414,
+  "tvl_in_token0": 241360294.59,
+  "tvl_in_token1": 143584.31,
+  "num_lps": 1,
+  "fee_pips": 500,
+  "tick_current": -74265,
+  "has_activity": false
+}`}</CodeBlock>
+              </div>
             </div>
-
-            <p className="mt-10 text-[0.9375rem] leading-[1.65] text-[var(--color-text-muted)]">
-              Balancer and Curve-style Stableswap tools arrive in v0.2 once
-              defipy ships their live providers.
+            <p className="mt-6 text-[0.875rem] leading-[1.6] text-[var(--color-text-muted)]">
+              The <span className="font-mono">rpc_url</span> above is a public node
+              for trying it out &mdash; use your own provider (Alchemy, Infura, etc.)
+              for production. It is read once, server-side, and never persisted.
             </p>
           </div>
         </section>
 
+        {/* Common parameters */}
+        <section id="reference" className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
+          <div className="mx-auto max-w-[1100px]">
+            <SectionEyebrow>API reference</SectionEyebrow>
+            <SectionTitle>Common parameters.</SectionTitle>
+            <SectionLede>
+              Every tool accepts these. Tool-specific parameters are listed under
+              each tool below.
+            </SectionLede>
+            <div className="max-w-[760px]">
+              {commonParams.map((f) => (
+                <FieldRow key={f.name} field={f} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Tool reference */}
+        <section className="px-8 pb-20">
+          <div className="mx-auto max-w-[1100px] space-y-16">
+            {tools.map((tool) => (
+              <div key={tool.name}>
+                <div className="mb-2 flex flex-wrap items-baseline gap-x-3">
+                  <h3 className="font-mono text-[1.15rem] font-medium text-[var(--color-accent)]">
+                    {tool.name}
+                  </h3>
+                  <span className="rounded-sm border border-[rgb(58_106_120/0.4)] px-1.5 py-0.5 text-[0.65rem] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+                    {tool.scope}
+                  </span>
+                </div>
+                <p className="mb-2 max-w-[68ch] text-[0.95rem] leading-[1.65] text-[var(--color-text-secondary)]">
+                  {tool.desc}
+                </p>
+                <p className="mb-6 border-l-2 border-[var(--color-accent-deep)] pl-3 text-[0.9rem] italic text-[var(--color-text-muted)]">
+                  {tool.query}
+                </p>
+
+                <div className="grid gap-x-12 gap-y-8 md:grid-cols-2">
+                  <div>
+                    <div className="mb-1 text-[0.75rem] font-medium uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                      Parameters
+                    </div>
+                    {tool.params.map((f) => (
+                      <FieldRow key={f.name} field={f} />
+                    ))}
+                  </div>
+                  <div>
+                    <div className="mb-1 text-[0.75rem] font-medium uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                      Returns
+                    </div>
+                    {tool.returns.map((f) => (
+                      <FieldRow key={f.name} field={f} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+            <p className="text-[0.9375rem] leading-[1.65] text-[var(--color-text-muted)]">
+              Balancer and Curve-style Stableswap tools arrive in v0.2 once defipy
+              ships their live providers.
+            </p>
+          </div>
+        </section>
+
+        {/* Usage notes */}
+        <section id="usage" className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
+          <div className="mx-auto max-w-[1100px]">
+            <SectionEyebrow>Usage notes</SectionEyebrow>
+            <SectionTitle>Things worth knowing.</SectionTitle>
+            <div className="grid gap-x-10 gap-y-7 sm:grid-cols-2">
+              <div>
+                <h3 className="mb-2 text-base font-medium text-[var(--color-text-primary)]">
+                  Bring your own RPC
+                </h3>
+                <p className="text-[0.9375rem] leading-[1.65] text-[var(--color-text-secondary)]">
+                  Any Ethereum or L2 JSON-RPC works (Alchemy, Infura, public
+                  nodes). Passed per call, read once server-side, never stored or
+                  logged &mdash; it is redacted from every receipt.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-2 text-base font-medium text-[var(--color-text-primary)]">
+                  chain_id guard
+                </h3>
+                <p className="text-[0.9375rem] leading-[1.65] text-[var(--color-text-secondary)]">
+                  Supply <span className="font-mono">chain_id</span> to have the
+                  call rejected if your RPC points at a different chain than the
+                  pool &mdash; catches a wrong-network RPC before it returns junk.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-2 text-base font-medium text-[var(--color-text-primary)]">
+                  V3 ticks &amp; liquidity
+                </h3>
+                <p className="text-[0.9375rem] leading-[1.65] text-[var(--color-text-secondary)]">
+                  The twin is built from the pool&rsquo;s full-range active
+                  liquidity. <span className="font-mono">lwr_tick</span>/
+                  <span className="font-mono">upr_tick</span> describe your{" "}
+                  <em>position</em> range and feed the concentrated-liquidity IL
+                  math &mdash; they don&rsquo;t re-scope the pool snapshot.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-2 text-base font-medium text-[var(--color-text-primary)]">
+                  Read-only
+                </h3>
+                <p className="text-[0.9375rem] leading-[1.65] text-[var(--color-text-secondary)]">
+                  Analytics only &mdash; the endpoint never signs or sends
+                  transactions. Some fields are protocol-specific (marked{" "}
+                  <span className="text-[var(--color-text-muted)]">V2 only</span> /{" "}
+                  <span className="text-[var(--color-text-muted)]">V3 only</span>{" "}
+                  above) and return null on the other.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Errors */}
+        <section id="errors" className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
+          <div className="mx-auto max-w-[1100px]">
+            <SectionEyebrow>Errors</SectionEyebrow>
+            <SectionTitle>Structured, never silent.</SectionTitle>
+            <SectionLede>
+              Bad input or an unreachable RPC returns a clear error message (your
+              RPC URL is scrubbed from it), not a crash or empty result.
+            </SectionLede>
+            <div className="max-w-[760px]">
+              {errors.map((e) => (
+                <div
+                  key={e.code}
+                  className="border-t border-[rgb(58_106_120/0.15)] py-3"
+                >
+                  <code className="font-mono text-[0.875rem] font-medium text-[var(--color-text-primary)]">
+                    {e.code}
+                  </code>
+                  <p className="mt-1 text-[0.875rem] leading-[1.55] text-[var(--color-text-secondary)]">
+                    {e.note}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* How it works */}
-        <section
-          id="how"
-          className="border-t border-[rgb(58_106_120/0.2)] px-8 py-24"
-        >
+        <section id="how" className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
           <div className="mx-auto max-w-[1100px]">
             <SectionEyebrow>How it works</SectionEyebrow>
             <SectionTitle>The math is open. The reports are paid.</SectionTitle>
-
             <div className="max-w-[68ch] space-y-5 text-base leading-[1.75] text-[var(--color-text-secondary)]">
               <p>
-                DeFiMind reads{" "}
-                <strong className="font-medium text-[var(--color-text-primary)]">
-                  live
-                </strong>{" "}
-                Uniswap V2/V3 pool state through a caller-supplied RPC, passed per
-                tool call. The endpoint is authless and stores nothing &mdash; the
-                RPC URL is redacted from every receipt. Each call pulls state, runs
-                the analysis, and returns a typed result.
+                Each call reads live Uniswap V2/V3 pool state through your RPC,
+                builds a stateless twin, runs a closed-form AMM primitive, and
+                returns a typed result. Nothing is cached between calls.
               </p>
               <p>
-                The analytics aren&rsquo;t API wrappers &mdash; they&rsquo;re
-                closed-form AMM math, powered by the open-source{" "}
+                The analytics are powered by the open-source{" "}
                 <a
                   href="https://defipy.org"
                   target="_blank"
@@ -251,18 +525,12 @@ export default function McpPage() {
                 >
                   defipy
                 </a>{" "}
-                library and its State Twin substrate. V3 impermanent loss is
-                computed over the position&rsquo;s tick range via
-                concentrated-liquidity math.
-              </p>
-              <p>
-                The same methodology backs DeFiMind&rsquo;s paid reports. The
-                library is open and verifiable; the endpoint is the
-                free, self-serve surface.
+                library and its State Twin substrate &mdash; the same methodology
+                behind DeFiMind&rsquo;s paid reports. The library is open and
+                verifiable; this endpoint is the free, self-serve surface.
               </p>
             </div>
-
-            <div className="mt-12 flex flex-wrap gap-x-7 gap-y-3">
+            <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3">
               {links.map((link) => (
                 <a
                   key={link.label}
