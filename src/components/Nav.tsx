@@ -1,25 +1,41 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+// In-page sections live on the home route. Links are written as `/#id` so they
+// work from any page: on `/` they scroll to the section; on a sub-page (e.g.
+// `/mcp`) they route home, then scroll. `/mcp` is a real route.
+const sectionLinks = [
+  { label: "Services", href: "/#services" },
+  { label: "Method", href: "/#method" },
+  { label: "Research", href: "/#research" },
+  { label: "About", href: "/#about" },
+  { label: "MCP", href: "/mcp" },
+  { label: "Contact", href: "/#contact" },
+];
 
 export function Nav() {
-  // Logo click handler: scroll to top of the page smoothly. Using a click
-  // handler rather than <Link href="/"> because Next.js App Router treats
-  // clicks on Link components pointing to the current route as no-ops, which
-  // means the logo would otherwise do nothing on a single-page site. Smooth
-  // scroll matches the in-page anchor link behavior on the rest of the nav.
+  const pathname = usePathname();
+
+  // On the home page, intercept the logo click to smooth-scroll to top (a
+  // Link to the current route is otherwise a no-op). On any other route, let
+  // the Link navigate home normally.
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
     <nav className="sticky top-0 z-50 border-b border-[rgb(58_106_120/0.2)] bg-[rgb(10_14_26/0.85)] px-8 backdrop-blur">
       <div className="mx-auto flex h-28 max-w-[1100px] items-center justify-between">
-        <a
-          href="#"
+        <Link
+          href="/"
           onClick={handleLogoClick}
-          aria-label="Scroll to top"
+          aria-label="DeFiMind home"
           className="flex items-center gap-4 text-[1.5rem] font-medium tracking-tight text-[var(--color-text-primary)]"
         >
           <Image
@@ -33,48 +49,18 @@ export function Nav() {
           <span>
             defimind<span className="text-[var(--color-accent)]">.</span>ai
           </span>
-        </a>
+        </Link>
         <ul className="flex gap-8 text-sm text-[var(--color-text-secondary)]">
-          <li>
-            <a
-              href="#services"
-              className="transition-colors hover:text-[var(--color-accent)]"
-            >
-              Services
-            </a>
-          </li>
-          <li>
-            <a
-              href="#method"
-              className="transition-colors hover:text-[var(--color-accent)]"
-            >
-              Method
-            </a>
-          </li>
-          <li>
-            <a
-              href="#research"
-              className="transition-colors hover:text-[var(--color-accent)]"
-            >
-              Research
-            </a>
-          </li>
-          <li>
-            <a
-              href="#about"
-              className="transition-colors hover:text-[var(--color-accent)]"
-            >
-              About
-            </a>
-          </li>
-          <li>
-            <a
-              href="#contact"
-              className="transition-colors hover:text-[var(--color-accent)]"
-            >
-              Contact
-            </a>
-          </li>
+          {sectionLinks.map((link) => (
+            <li key={link.label}>
+              <Link
+                href={link.href}
+                className="transition-colors hover:text-[var(--color-accent)]"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </nav>
