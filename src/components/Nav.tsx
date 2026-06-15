@@ -4,15 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+// Nav reading order, left → right:
+//   Services / Method / Research  ─ the practice's positioning
+//   MCP / Cleo                    ─ the technical surfaces buyers/builders use
+//   About / Contact               ─ who's behind it, how to engage
+//
 // In-page sections live on the home route. Links are written as `/#id` so they
 // work from any page: on `/` they scroll to the section; on a sub-page (e.g.
-// `/mcp`) they route home, then scroll. `/mcp` is a real route.
+// `/mcp` or `/cleo`) they route home, then scroll. `/mcp` and `/cleo` are real
+// routes.
 const sectionLinks = [
   { label: "Services", href: "/#services" },
   { label: "Method", href: "/#method" },
   { label: "Research", href: "/#research" },
-  { label: "About", href: "/#about" },
   { label: "MCP", href: "/mcp" },
+  { label: "Cleo", href: "/cleo" },
+  { label: "About", href: "/#about" },
   { label: "Contact", href: "/#contact" },
 ];
 
