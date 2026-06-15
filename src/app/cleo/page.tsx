@@ -344,6 +344,10 @@ chain_id = 1`}</CodeBlock>
           Deliberate visual contrast with the Hero: Cleo lives in her parchment
           card (she's a character), the substrate lives natively on the dark
           page (it's infrastructure).
+
+          The diagram container is LEFT-ALIGNED with the text above and below
+          (no flex/justify-center wrapper) — matches the page convention used
+          by the CodeBlocks in "What she does" and "Under the hood".
         */}
         <section className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
           <div className="mx-auto max-w-[1100px]">
@@ -357,24 +361,14 @@ chain_id = 1`}</CodeBlock>
               counterfactuals at memory speed.
             </SectionLede>
 
-            {/*
-              Diagram — designed for the dark page, sits natively on it.
-              Uses Next.js Image with `fill` + `object-contain` so the file's
-              natural aspect ratio is preserved regardless of what it actually
-              is. The 16:9 aspect-ratio container is a sensible default for a
-              diagram; if the file is a different shape, the image scales to
-              fit centered with empty page-color margins.
-            */}
-            <div className="my-12 flex justify-center">
-              <div className="relative aspect-[16/9] w-full max-w-[820px]">
-                <Image
-                  src="/state-twins.png"
-                  alt="State Twin mechanism: an off-chain replica of on-chain AMM pool state that enables forking, replay, and counterfactual reasoning without each query incurring a new RPC call"
-                  fill
-                  sizes="(min-width: 820px) 820px, 100vw"
-                  className="object-contain"
-                />
-              </div>
+            <div className="relative my-12 aspect-[16/9] w-full max-w-[820px]">
+              <Image
+                src="/state-twins.png"
+                alt="State Twin mechanism: an off-chain replica of on-chain AMM pool state that enables forking, replay, and counterfactual reasoning without each query incurring a new RPC call"
+                fill
+                sizes="(min-width: 820px) 820px, 100vw"
+                className="object-contain"
+              />
             </div>
 
             <div className="max-w-[68ch] space-y-5 text-base leading-[1.75] text-[var(--color-text-secondary)]">
