@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import {
@@ -48,18 +47,24 @@ export default function CleoPage() {
           a teal-deep border + soft shadow. The light card on the navy page
           is the deliberate contrast: she's a character with her own visual
           register, not a logo trying to merge with the UI.
+
+          IMPORTANT — image renders at NATURAL aspect ratio:
+          We use a plain <img> with `h-auto` rather than next/image. The Next
+          Image component requires explicit width/height that must match the
+          PNG's actual aspect ratio, or it stretches the image to fit. Plain
+          <img> respects the file's natural ratio. The card's height adapts
+          to whatever ratio the illustration is (likely slightly landscape
+          given the outstretched arm). w-* controls the width; height follows.
         */}
         <section className="px-8 pb-14 pt-28">
           <div className="mx-auto max-w-[1100px]">
             <div className="grid items-center gap-x-12 gap-y-10 md:grid-cols-[auto_1fr]">
               <div className="flex justify-center md:justify-start">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src="/cleo-mark.png"
                   alt="Cleo — a classical sketch portrait, wearing a laurel crown, holding scrolls"
-                  width={400}
-                  height={400}
-                  priority
-                  className="h-64 w-64 shrink-0 rounded-2xl border border-[var(--color-accent-deep)] bg-[#F5EFE0] shadow-xl shadow-black/40 md:h-80 md:w-80"
+                  className="h-auto w-72 shrink-0 rounded-2xl border border-[var(--color-accent-deep)] bg-[#F5EFE0] shadow-xl shadow-black/40 md:w-96"
                 />
               </div>
 
