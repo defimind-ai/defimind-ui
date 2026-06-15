@@ -27,25 +27,55 @@ export function Hero() {
           </a>
         </div>
 
-        {/* Free, self-serve surface — the open side of "the math is open, the
-            reports are paid." Secondary to the audit CTAs above. */}
-        <Link
-          href="/mcp"
-          className="group mt-8 inline-flex max-w-[55ch] items-center gap-3 rounded-lg border border-[rgb(58_106_120/0.35)] bg-[var(--color-bg-elevated)] px-5 py-3.5 transition-colors hover:border-[var(--color-accent)]"
-        >
-          <span className="shrink-0 rounded-sm bg-[rgb(93_168_160/0.15)] px-2 py-0.5 text-[0.7rem] font-medium uppercase tracking-wide text-[var(--color-accent)]">
-            Live
-          </span>
-          <span className="text-[0.9375rem] leading-[1.5] text-[var(--color-text-secondary)]">
-            <strong className="font-medium text-[var(--color-text-primary)]">
-              MCP endpoint
-            </strong>{" "}
-            &mdash; Uniswap V2/V3 analysis in Claude, Cursor &amp; any MCP client
-          </span>
-          <span className="ml-auto shrink-0 text-[var(--color-accent)] transition-transform group-hover:translate-x-0.5">
-            &rarr;
-          </span>
-        </Link>
+        {/*
+          Technical surfaces — the free, self-serve side of "the math is open,
+          the reports are paid." Two compact tiles, secondary to the audit
+          CTAs above.
+
+          Pills:
+            • MCP  · Live → hosted endpoint, call it from any MCP client
+            • Cleo · Run  → installable agent, run it locally
+          Together the two pills name the two ways a builder/agent-curious
+          person can engage with DeFiMind's open infrastructure.
+        */}
+        <div className="mt-8 flex max-w-[55ch] flex-col gap-2.5">
+          <Link
+            href="/mcp"
+            className="group inline-flex items-center gap-3 rounded-lg border border-[rgb(58_106_120/0.35)] bg-[var(--color-bg-elevated)] px-5 py-3.5 transition-colors hover:border-[var(--color-accent)]"
+          >
+            <span className="shrink-0 rounded-sm bg-[rgb(93_168_160/0.15)] px-2 py-0.5 text-[0.7rem] font-medium uppercase tracking-wide text-[var(--color-accent)]">
+              Live
+            </span>
+            <span className="text-[0.9375rem] leading-[1.5] text-[var(--color-text-secondary)]">
+              <strong className="font-medium text-[var(--color-text-primary)]">
+                MCP endpoint
+              </strong>{" "}
+              &mdash; Uniswap V2/V3 analysis in Claude, Cursor &amp; any MCP
+              client
+            </span>
+            <span className="ml-auto shrink-0 text-[var(--color-accent)] transition-transform group-hover:translate-x-0.5">
+              &rarr;
+            </span>
+          </Link>
+
+          <Link
+            href="/cleo"
+            className="group inline-flex items-center gap-3 rounded-lg border border-[rgb(58_106_120/0.35)] bg-[var(--color-bg-elevated)] px-5 py-3.5 transition-colors hover:border-[var(--color-accent)]"
+          >
+            <span className="shrink-0 rounded-sm bg-[rgb(93_168_160/0.15)] px-2 py-0.5 text-[0.7rem] font-medium uppercase tracking-wide text-[var(--color-accent)]">
+              Run
+            </span>
+            <span className="text-[0.9375rem] leading-[1.5] text-[var(--color-text-secondary)]">
+              <strong className="font-medium text-[var(--color-text-primary)]">
+                Cleo
+              </strong>{" "}
+              &mdash; LP analyst agent, watches your Uniswap pools and reports
+            </span>
+            <span className="ml-auto shrink-0 text-[var(--color-accent)] transition-transform group-hover:translate-x-0.5">
+              &rarr;
+            </span>
+          </Link>
+        </div>
       </div>
     </section>
   );
