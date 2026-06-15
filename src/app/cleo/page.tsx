@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import {
@@ -44,35 +45,42 @@ export default function CleoPage() {
         {/*
           HERO — Two-column on desktop (icon left, text right), stacked on
           mobile. Cleo sits in a parchment-toned portrait card (#F5EFE0) with
-          a teal-deep border + soft shadow. The light card on the navy page
-          is the deliberate contrast: she's a character with her own visual
-          register, not a logo trying to merge with the UI.
+          a teal-deep border + soft shadow.
 
-          IMPORTANT — image renders at NATURAL aspect ratio:
-          We use a plain <img> with `h-auto` rather than next/image. The Next
-          Image component requires explicit width/height that must match the
-          PNG's actual aspect ratio, or it stretches the image to fit. Plain
-          <img> respects the file's natural ratio. The card's height adapts
-          to whatever ratio the illustration is (likely slightly landscape
-          given the outstretched arm). w-* controls the width; height follows.
+          Image rendering strategy:
+          We use Next.js <Image fill /> inside a fixed-aspect-ratio container,
+          with `object-contain` so the image fits at its NATURAL aspect ratio
+          without distortion. The container is square; if the source file is
+          slightly landscape (as the illustration appears to be), small
+          parchment-toned margins show top/bottom — which reads as proper
+          portrait matting. Plain <img> with h-auto turned out to be flaky
+          for the dev-server static serve path; Next.js Image's `/_next/image`
+          pipeline serves the file reliably.
+
+          Header order: name first (SectionTitle = "Cleo."), descriptor as the
+          small eyebrow above. The person is the page's anchor.
         */}
         <section className="px-8 pb-14 pt-28">
           <div className="mx-auto max-w-[1100px]">
             <div className="grid items-center gap-x-12 gap-y-10 md:grid-cols-[auto_1fr]">
               <div className="flex justify-center md:justify-start">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/cleo-mark.png"
-                  alt="Cleo — a classical sketch portrait, wearing a laurel crown, holding scrolls"
-                  className="h-auto w-72 shrink-0 rounded-2xl border border-[var(--color-accent-deep)] bg-[#F5EFE0] shadow-xl shadow-black/40 md:w-96"
-                />
+                <div className="relative aspect-square w-72 shrink-0 overflow-hidden rounded-2xl border border-[var(--color-accent-deep)] bg-[#F5EFE0] shadow-xl shadow-black/40 md:w-96">
+                  <Image
+                    src="/cleo-mark.png"
+                    alt="Cleo — a classical sketch portrait, wearing a laurel crown, holding scrolls"
+                    fill
+                    priority
+                    sizes="(min-width: 768px) 384px, 288px"
+                    className="object-contain"
+                  />
+                </div>
               </div>
 
               <div>
-                <SectionEyebrow>Cleo</SectionEyebrow>
-                <SectionTitle>
-                  DeFiMind&rsquo;s LP analyst agent.
-                </SectionTitle>
+                <SectionEyebrow>
+                  DeFiMind&rsquo;s LP analyst agent
+                </SectionEyebrow>
+                <SectionTitle>Cleo.</SectionTitle>
                 <SectionLede>
                   Cleo watches your Uniswap liquidity positions, consults
                   DeFiMind&rsquo;s hosted analytics, and reports her findings so
@@ -349,14 +357,24 @@ chain_id = 1`}</CodeBlock>
               counterfactuals at memory speed.
             </SectionLede>
 
-            {/* Diagram — designed for the dark page, sits natively on it */}
+            {/*
+              Diagram — designed for the dark page, sits natively on it.
+              Uses Next.js Image with `fill` + `object-contain` so the file's
+              natural aspect ratio is preserved regardless of what it actually
+              is. The 16:9 aspect-ratio container is a sensible default for a
+              diagram; if the file is a different shape, the image scales to
+              fit centered with empty page-color margins.
+            */}
             <div className="my-12 flex justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/state-twins.png"
-                alt="State Twin mechanism: an off-chain replica of on-chain AMM pool state that enables forking, replay, and counterfactual reasoning without each query incurring a new RPC call"
-                className="h-auto w-full max-w-[820px]"
-              />
+              <div className="relative aspect-[16/9] w-full max-w-[820px]">
+                <Image
+                  src="/state-twins.png"
+                  alt="State Twin mechanism: an off-chain replica of on-chain AMM pool state that enables forking, replay, and counterfactual reasoning without each query incurring a new RPC call"
+                  fill
+                  sizes="(min-width: 820px) 820px, 100vw"
+                  className="object-contain"
+                />
+              </div>
             </div>
 
             <div className="max-w-[68ch] space-y-5 text-base leading-[1.75] text-[var(--color-text-secondary)]">
