@@ -40,8 +40,8 @@ export function Hero() {
           the two tiles paired horizontally.
 
           Pills:
-            • MCP  · Live → hosted endpoint, call it from any MCP client
-            • Cleo · Run  → installable agent, run it locally
+            • MCP        · Live → hosted endpoint, call it from any MCP client
+            • StateTwins · Run  → installable agent, run it locally
           Together the two pills name the two ways a builder/agent-curious
           person can engage with DeFiMind's open infrastructure.
         */}
@@ -66,7 +66,7 @@ export function Hero() {
           </Link>
 
           <Link
-            href="/cleo"
+            href="/statetwins"
             className="group inline-flex flex-1 items-center gap-3 rounded-lg border border-[rgb(58_106_120/0.35)] bg-[var(--color-bg-elevated)] px-5 py-3.5 transition-colors hover:border-[var(--color-accent)]"
           >
             <span className="shrink-0 rounded-sm bg-[rgb(93_168_160/0.15)] px-2 py-0.5 text-[0.7rem] font-medium uppercase tracking-wide text-[var(--color-accent)]">
@@ -74,9 +74,9 @@ export function Hero() {
             </span>
             <span className="text-[0.9375rem] leading-[1.5] text-[var(--color-text-secondary)]">
               <strong className="font-medium text-[var(--color-text-primary)]">
-                Cleo
+                StateTwins
               </strong>{" "}
-              &mdash; LP analyst agent, watches your Uniswap pools and reports
+              &mdash; monitoring agent, watches your Uniswap pools and reports
             </span>
             <span className="ml-auto shrink-0 text-[var(--color-accent)] transition-transform group-hover:translate-x-0.5">
               &rarr;

@@ -9,17 +9,17 @@ import {
 } from "@/components/SectionPrimitives";
 
 export const metadata: Metadata = {
-  title: "Cleo · DeFiMind's LP Analyst Agent",
+  title: "StateTwins · DeFiMind's Uniswap Position Monitor",
   description:
-    "Cleo is DeFiMind's analyst agent — she watches your Uniswap LP positions, consults DeFiMind's hosted analytics, and reports her findings. Analysis only; you make every decision. Built on the open-source defipy State Twins substrate.",
-  alternates: { canonical: "/cleo" },
+    "StateTwins is DeFiMind's monitoring agent — it watches your Uniswap LP positions, consults DeFiMind's hosted analytics, and reports its findings. Analysis only; you make every decision. Built on the open-source defipy State Twins substrate.",
+  alternates: { canonical: "/statetwins" },
   openGraph: {
     type: "website",
-    url: "https://defimind.ai/cleo",
+    url: "https://defimind.ai/statetwins",
     siteName: "DeFiMind",
-    title: "Cleo · DeFiMind's LP Analyst Agent",
+    title: "StateTwins · DeFiMind's Uniswap Position Monitor",
     description:
-      "An LP analyst agent that watches your Uniswap positions and reports — analysis only, you decide. Powered by DeFiMind's hosted MCP endpoint.",
+      "A monitoring agent that watches your Uniswap positions and reports — analysis only, you decide. Powered by DeFiMind's hosted MCP endpoint.",
   },
 };
 
@@ -37,32 +37,32 @@ function CodeBlock({ children }: { children: string }) {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default function CleoPage() {
+export default function StateTwinsPage() {
   return (
     <>
       <Nav />
       <main>
         {/*
-          HERO — single-column. Name first (SectionTitle = "Cleo."), descriptor
-          as the small eyebrow above; the person is the page's anchor.
+          HERO — single-column. Name first (SectionTitle = "StateTwins."),
+          descriptor as the small eyebrow above.
         */}
         <section className="px-8 pb-14 pt-28">
           <div className="mx-auto max-w-[1100px]">
             <div className="max-w-[760px]">
               <SectionEyebrow>
-                DeFiMind&rsquo;s LP analyst agent
+                DeFiMind&rsquo;s monitoring agent
               </SectionEyebrow>
-              <SectionTitle>Cleo.</SectionTitle>
+              <SectionTitle>StateTwins.</SectionTitle>
               <SectionLede>
-                Cleo watches your Uniswap liquidity positions, consults
-                DeFiMind&rsquo;s hosted analytics, and reports her findings so
-                you can make informed decisions. She does not trade,
+                StateTwins watches your Uniswap liquidity positions, consults
+                DeFiMind&rsquo;s hosted analytics, and reports its findings so
+                you can make informed decisions. It does not trade,
                 rebalance, or move funds &mdash; you make every decision.
               </SectionLede>
 
               <p className="mb-8 max-w-[55ch] text-[0.9375rem] leading-[1.65] text-[var(--color-text-muted)]">
-                Named for the Muse of history &mdash; the recorder of the DeFi
-                substrate.
+                Named for the State Twins substrate it runs on &mdash; an
+                off-chain replica of on-chain pool state.
               </p>
 
               <div className="flex flex-wrap gap-3.5">
@@ -85,13 +85,13 @@ export default function CleoPage() {
           </div>
         </section>
 
-        {/* What she does */}
+        {/* What it does */}
         <section className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
           <div className="mx-auto max-w-[1100px]">
-            <SectionEyebrow>What she does</SectionEyebrow>
+            <SectionEyebrow>What it does</SectionEyebrow>
             <SectionTitle>Watch. Analyze. Report.</SectionTitle>
             <SectionLede>
-              On a schedule you set, Cleo cycles through every pool in your
+              On a schedule you set, StateTwins cycles through every pool in your
               watchlist, asks DeFiMind&rsquo;s hosted tools to inspect each one,
               and prints the result. Two tools run by default &mdash;{" "}
               <strong className="font-medium text-[var(--color-text-primary)]">
@@ -111,8 +111,8 @@ export default function CleoPage() {
             </p>
 
             <div className="max-w-[820px]">
-              <CodeBlock>{`Cleo is watching 1 pool(s) via https://mcp.defimind.ai/mcp
-Cycle every 60s. Analysis only — Cleo reports, you decide.
+              <CodeBlock>{`StateTwins is watching 1 pool(s) via https://mcp.defimind.ai/mcp
+Cycle every 60s. Analysis only — StateTwins reports, you decide.
 
 [2026-06-15 19:40:25Z] USDC/WETH 0.05% (V3) — CheckPoolHealth
 {
@@ -138,7 +138,7 @@ Cycle every 60s. Analysis only — Cleo reports, you decide.
             </div>
 
             <p className="mt-8 max-w-[68ch] text-[0.9375rem] leading-[1.65] text-[var(--color-text-muted)]">
-              Cleo prints the full payload every cycle and emits an{" "}
+              StateTwins prints the full payload every cycle and emits an{" "}
               <span className="font-mono">⚠ ALERT</span> line when a signal
               trips. When nothing changes, you see steady output; when something
               changes, the change is loud.
@@ -155,11 +155,11 @@ Cycle every 60s. Analysis only — Cleo reports, you decide.
             <SectionEyebrow>Install</SectionEyebrow>
             <SectionTitle>The 10-minute path.</SectionTitle>
             <SectionLede>
-              Cleo ships as the{" "}
+              StateTwins ships as the{" "}
               <span className="font-mono text-[var(--color-text-primary)]">
                 defimind
               </span>{" "}
-              Python package. Install, point her at your pools, run. The hosted
+              Python package. Install, point it at your pools, run. The hosted
               endpoint is authless &mdash; no account, no API key, no wallet
               signature. You supply your own RPC URL per call (bring-your-own-RPC);
               it&rsquo;s never stored or logged.
@@ -214,13 +214,13 @@ chain_id = 1`}</CodeBlock>
 
               <div>
                 <h3 className="mb-3 text-base font-medium text-[var(--color-text-primary)]">
-                  3. Run her
+                  3. Run it
                 </h3>
                 <div className="max-w-[640px]">
                   <CodeBlock>defimind</CodeBlock>
                 </div>
                 <p className="mt-3 max-w-[68ch] text-[0.875rem] leading-[1.6] text-[var(--color-text-muted)]">
-                  Cleo prints her intro line, runs a cycle, sleeps for{" "}
+                  StateTwins prints its intro line, runs a cycle, sleeps for{" "}
                   <span className="font-mono">poll_interval_seconds</span>, and
                   repeats. Ctrl-C to stop.
                 </p>
@@ -251,8 +251,8 @@ chain_id = 1`}</CodeBlock>
             </SectionLede>
 
             <div className="max-w-[820px]">
-              <CodeBlock>{`  Cleo (defimind package)            DeFiMind endpoint               substrate
-  ───────────────────────            ─────────────────               ─────────
+              <CodeBlock>{`  StateTwins (defimind package)      DeFiMind endpoint               substrate
+  ─────────────────────────────      ─────────────────               ─────────
   read config.toml
   for each pool, each cycle:
     call a tool  ──────────────────▶ mcp.defimind.ai/mcp
@@ -291,7 +291,7 @@ chain_id = 1`}</CodeBlock>
                   Powered by open-source defipy
                 </h3>
                 <p className="text-[0.9375rem] leading-[1.65] text-[var(--color-text-secondary)]">
-                  The AMM math behind every Cleo report lives in the{" "}
+                  The AMM math behind every StateTwins report lives in the{" "}
                   <a
                     href="https://defipy.org"
                     target="_blank"
@@ -312,21 +312,18 @@ chain_id = 1`}</CodeBlock>
           Substrate / The State Twin — a dedicated section for the fulcrum
           paper. The diagram (state-twins.png) is designed for the dark page
           background, so it sits directly on #0A0E1A with no card frame.
-          Deliberate visual contrast with the Hero: Cleo lives in her parchment
-          card (she's a character), the substrate lives natively on the dark
-          page (it's infrastructure).
 
           The diagram container is LEFT-ALIGNED with the text above and below
           (no flex/justify-center wrapper) — matches the page convention used
-          by the CodeBlocks in "What she does" and "Under the hood".
+          by the CodeBlocks in "What it does" and "Under the hood".
         */}
         <section className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
           <div className="mx-auto max-w-[1100px]">
             <SectionEyebrow>Substrate</SectionEyebrow>
             <SectionTitle>The State Twin.</SectionTitle>
             <SectionLede>
-              Cleo&rsquo;s reasoning runs against a typed, in-memory replica of
-              on-chain pool state &mdash; a State Twin. Without it, every
+              StateTwins&rsquo; reasoning runs against a typed, in-memory replica
+              of on-chain pool state &mdash; a State Twin. Without it, every
               &ldquo;what if?&rdquo; question would cost an RPC read or a real
               transaction. With it, an agent can fork, replay, and explore
               counterfactuals at memory speed.
@@ -364,7 +361,7 @@ chain_id = 1`}</CodeBlock>
                 unbounded.
               </p>
               <p>
-                This is the substrate Cleo runs on. Every{" "}
+                This is the substrate StateTwins runs on. Every{" "}
                 <span className="font-mono text-[var(--color-text-primary)]">
                   CheckPoolHealth
                 </span>{" "}
@@ -372,7 +369,7 @@ chain_id = 1`}</CodeBlock>
                 <span className="font-mono text-[var(--color-text-primary)]">
                   DetectRugSignals
                 </span>{" "}
-                trip, every counterfactual she&rsquo;ll eventually run as new
+                trip, every counterfactual it&rsquo;ll eventually run as new
                 modes ship &mdash; all of it happens against State Twin
                 replicas of the pools you care about. The formal definition,
                 fidelity bound, and reference implementation are in the paper.
@@ -399,7 +396,7 @@ chain_id = 1`}</CodeBlock>
             <SectionTitle>Analysis only. You decide.</SectionTitle>
             <div className="max-w-[68ch] space-y-5 text-base leading-[1.75] text-[var(--color-text-secondary)]">
               <p>
-                Cleo produces{" "}
+                StateTwins produces{" "}
                 <strong className="font-medium text-[var(--color-text-primary)]">
                   analysis
                 </strong>
@@ -411,14 +408,14 @@ chain_id = 1`}</CodeBlock>
                 <strong className="font-medium text-[var(--color-text-primary)]">
                   action
                 </strong>
-                . She does not tell you to enter, exit, or rebalance a position.
-                She does not transact. She does not hold keys.
+                . It does not tell you to enter, exit, or rebalance a position.
+                It does not transact. It does not hold keys.
               </p>
               <p>
-                What she reports is information about your positions&rsquo;
+                What it reports is information about your positions&rsquo;
                 current state and risk; the decision is always yours. This is
                 intentional and it is where the line stays. The agentic stack
-                Cleo runs in is observation-only by design &mdash; the State
+                StateTwins runs in is observation-only by design &mdash; the State
                 Twins paper formalizes why the boundary belongs there.
               </p>
             </div>
@@ -429,10 +426,10 @@ chain_id = 1`}</CodeBlock>
         <section className="border-t border-[rgb(58_106_120/0.2)] px-8 py-20">
           <div className="mx-auto max-w-[1100px]">
             <SectionEyebrow>Roadmap</SectionEyebrow>
-            <SectionTitle>It&rsquo;s always Cleo, in modes.</SectionTitle>
+            <SectionTitle>It&rsquo;s always StateTwins, in modes.</SectionTitle>
             <SectionLede>
-              Today Cleo runs one mode: monitoring. New capabilities arrive as
-              new modes &mdash; each one a question-shape Cleo can carry, each
+              Today StateTwins runs one mode: monitoring. New capabilities arrive as
+              new modes &mdash; each one a question-shape StateTwins can carry, each
               one composed from the same hosted tools and the same open-source
               substrate.
             </SectionLede>
