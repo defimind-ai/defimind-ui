@@ -11,11 +11,11 @@ import {
 export const metadata: Metadata = {
   title: "StateTwins · DeFiMind's Uniswap Position Monitor",
   description:
-    "StateTwins is DeFiMind's monitoring agent — it watches your Uniswap LP positions, consults DeFiMind's hosted analytics, and reports its findings. Analysis only; you make every decision. Built on the open-source defipy State Twins substrate.",
-  alternates: { canonical: "/statetwins" },
+    "StateTwins is DeFiMind's AI agent — it watches your Uniswap LP positions, consults DeFiMind's hosted analytics, and reports its findings. Analysis only; you make every decision. Built on the open-source defipy State Twins substrate.",
+  alternates: { canonical: "/agent" },
   openGraph: {
     type: "website",
-    url: "https://defimind.ai/statetwins",
+    url: "https://defimind.ai/agent",
     siteName: "DeFiMind",
     title: "StateTwins · DeFiMind's Uniswap Position Monitor",
     description:
@@ -50,7 +50,7 @@ export default function StateTwinsPage() {
           <div className="mx-auto max-w-[1100px]">
             <div className="max-w-[760px]">
               <SectionEyebrow>
-                DeFiMind&rsquo;s monitoring agent
+                DeFiMind&rsquo;s AI agent
               </SectionEyebrow>
               <SectionTitle>StateTwins.</SectionTitle>
               <SectionLede>

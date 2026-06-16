@@ -66,7 +66,7 @@ export function Hero() {
           </Link>
 
           <Link
-            href="/statetwins"
+            href="/agent"
             className="group inline-flex flex-1 items-center gap-3 rounded-lg border border-[rgb(58_106_120/0.35)] bg-[var(--color-bg-elevated)] px-5 py-3.5 transition-colors hover:border-[var(--color-accent)]"
           >
             <span className="shrink-0 rounded-sm bg-[rgb(93_168_160/0.15)] px-2 py-0.5 text-[0.7rem] font-medium uppercase tracking-wide text-[var(--color-accent)]">
