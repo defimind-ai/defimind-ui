@@ -43,72 +43,43 @@ export default function CleoPage() {
       <Nav />
       <main>
         {/*
-          HERO — Two-column on desktop (icon left, text right), stacked on
-          mobile. Cleo sits in a parchment-toned portrait card (#F5EFE0) with
-          a teal-deep border + soft shadow.
-
-          Image rendering strategy:
-          We use Next.js <Image fill /> inside a fixed-aspect-ratio container,
-          with `object-contain` so the image fits at its NATURAL aspect ratio
-          without distortion. The container is square; if the source file is
-          slightly landscape (as the illustration appears to be), small
-          parchment-toned margins show top/bottom — which reads as proper
-          portrait matting. Plain <img> with h-auto turned out to be flaky
-          for the dev-server static serve path; Next.js Image's `/_next/image`
-          pipeline serves the file reliably.
-
-          Header order: name first (SectionTitle = "Cleo."), descriptor as the
-          small eyebrow above. The person is the page's anchor.
+          HERO — single-column. Name first (SectionTitle = "Cleo."), descriptor
+          as the small eyebrow above; the person is the page's anchor.
         */}
         <section className="px-8 pb-14 pt-28">
           <div className="mx-auto max-w-[1100px]">
-            <div className="grid items-center gap-x-12 gap-y-10 md:grid-cols-[auto_1fr]">
-              <div className="flex justify-center md:justify-start">
-                <div className="relative aspect-square w-72 shrink-0 overflow-hidden rounded-2xl border border-[var(--color-accent-deep)] bg-[#F5EFE0] shadow-xl shadow-black/40 md:w-96">
-                  <Image
-                    src="/cleo-mark.png"
-                    alt="Cleo — a classical sketch portrait, wearing a laurel crown, holding scrolls"
-                    fill
-                    priority
-                    sizes="(min-width: 768px) 384px, 288px"
-                    className="object-contain"
-                  />
-                </div>
-              </div>
+            <div className="max-w-[760px]">
+              <SectionEyebrow>
+                DeFiMind&rsquo;s LP analyst agent
+              </SectionEyebrow>
+              <SectionTitle>Cleo.</SectionTitle>
+              <SectionLede>
+                Cleo watches your Uniswap liquidity positions, consults
+                DeFiMind&rsquo;s hosted analytics, and reports her findings so
+                you can make informed decisions. She does not trade,
+                rebalance, or move funds &mdash; you make every decision.
+              </SectionLede>
 
-              <div>
-                <SectionEyebrow>
-                  DeFiMind&rsquo;s LP analyst agent
-                </SectionEyebrow>
-                <SectionTitle>Cleo.</SectionTitle>
-                <SectionLede>
-                  Cleo watches your Uniswap liquidity positions, consults
-                  DeFiMind&rsquo;s hosted analytics, and reports her findings so
-                  you can make informed decisions. She does not trade,
-                  rebalance, or move funds &mdash; you make every decision.
-                </SectionLede>
+              <p className="mb-8 max-w-[55ch] text-[0.9375rem] leading-[1.65] text-[var(--color-text-muted)]">
+                Named for the Muse of history &mdash; the recorder of the DeFi
+                substrate.
+              </p>
 
-                <p className="mb-8 max-w-[55ch] text-[0.9375rem] leading-[1.65] text-[var(--color-text-muted)]">
-                  Named for the Muse of history &mdash; the recorder of the DeFi
-                  substrate.
-                </p>
-
-                <div className="flex flex-wrap gap-3.5">
-                  <a
-                    href="#install"
-                    className="inline-flex items-center justify-center rounded-md bg-[var(--color-accent)] px-6 py-3 text-[0.9375rem] font-medium text-[var(--color-bg-base)] transition-colors hover:bg-[var(--color-accent-hover)]"
-                  >
-                    Install
-                  </a>
-                  <a
-                    href="https://github.com/defimind-ai/defimind"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-md border border-[var(--color-accent-deep)] bg-transparent px-6 py-3 text-[0.9375rem] font-medium text-[var(--color-text-secondary)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
-                  >
-                    Source on GitHub
-                  </a>
-                </div>
+              <div className="flex flex-wrap gap-3.5">
+                <a
+                  href="#install"
+                  className="inline-flex items-center justify-center rounded-md bg-[var(--color-accent)] px-6 py-3 text-[0.9375rem] font-medium text-[var(--color-bg-base)] transition-colors hover:bg-[var(--color-accent-hover)]"
+                >
+                  Install
+                </a>
+                <a
+                  href="https://github.com/defimind-ai/defimind"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-md border border-[var(--color-accent-deep)] bg-transparent px-6 py-3 text-[0.9375rem] font-medium text-[var(--color-text-secondary)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
+                >
+                  Source on GitHub
+                </a>
               </div>
             </div>
           </div>
