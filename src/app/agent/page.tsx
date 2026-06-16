@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: "DeFiMind",
     title: "StateTwins · DeFiMind's Uniswap Position Monitor",
     description:
-      "A monitoring agent that watches your Uniswap positions and reports — analysis only, you decide. Powered by DeFiMind's hosted MCP endpoint.",
+      "An AI agent that watches your Uniswap positions and reports — analysis only, you decide. Powered by DeFiMind's hosted MCP endpoint.",
   },
 };
 
@@ -486,7 +486,7 @@ chain_id = 1`}</CodeBlock>
             </div>
 
             <p className="mt-10 max-w-[68ch] text-[0.875rem] leading-[1.65] text-[var(--color-text-muted)]">
-              v0.1 is the free monitoring agent. Heavier paid-compute analyses
+              v0.1 is the free AI agent. Heavier paid-compute analyses
               may later be offered as a metered tier &mdash; opt-in, not part of
               the free agent.
             </p>

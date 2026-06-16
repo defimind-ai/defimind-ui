@@ -76,7 +76,7 @@ export function Hero() {
               <strong className="font-medium text-[var(--color-text-primary)]">
                 StateTwins
               </strong>{" "}
-              &mdash; monitoring agent, watches your Uniswap pools and reports
+              &mdash; AI agent, watches your Uniswap pools and reports
             </span>
             <span className="ml-auto shrink-0 text-[var(--color-accent)] transition-transform group-hover:translate-x-0.5">
               &rarr;
