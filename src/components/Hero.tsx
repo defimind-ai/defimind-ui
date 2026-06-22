@@ -57,8 +57,8 @@ export function Hero() {
               <strong className="font-medium text-[var(--color-text-primary)]">
                 MCP endpoint
               </strong>{" "}
-              &mdash; Uniswap V2/V3 analysis in Claude, Cursor &amp; any MCP
-              client
+              &mdash; Uniswap V2/V3, Balancer &amp; Curve analysis in Claude,
+              Cursor &amp; any MCP client
             </span>
             <span className="ml-auto shrink-0 text-[var(--color-accent)] transition-transform group-hover:translate-x-0.5">
               &rarr;
@@ -76,7 +76,7 @@ export function Hero() {
               <strong className="font-medium text-[var(--color-text-primary)]">
                 StateTwins
               </strong>{" "}
-              &mdash; AI agent, watches your Uniswap pools and reports
+              &mdash; AI agent, watches your DeFi pools and reports
             </span>
             <span className="ml-auto shrink-0 text-[var(--color-accent)] transition-transform group-hover:translate-x-0.5">
               &rarr;
