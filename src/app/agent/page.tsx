@@ -464,18 +464,6 @@ chain_id = 1`}</CodeBlock>
                   Coming
                 </div>
                 <h3 className="mb-1 text-base font-medium text-[var(--color-text-primary)]">
-                  Ensemble
-                </h3>
-                <p className="text-[0.9rem] leading-[1.6] text-[var(--color-text-secondary)]">
-                  Fork a position into N State Twins under named price-shock
-                  scenarios; report the envelope.
-                </p>
-              </div>
-              <div className="border-l-2 border-[var(--color-accent-deep)] pl-4">
-                <div className="mb-1 text-[0.75rem] font-medium uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
-                  Coming
-                </div>
-                <h3 className="mb-1 text-base font-medium text-[var(--color-text-primary)]">
                   Treasury
                 </h3>
                 <p className="text-[0.9rem] leading-[1.6] text-[var(--color-text-secondary)]">
