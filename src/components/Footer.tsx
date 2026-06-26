@@ -26,16 +26,20 @@ export function Footer() {
 
         <div className="space-y-2 text-[0.8125rem] leading-[1.7] text-[var(--color-text-muted)]">
           {/*
-            Canonical contact block. Uses the semantic <address> element so
-            crawlers, screen readers, and AI systems recognize this as the
-            organization's contact info. "DeFiMind" is the FIRST LINE of the
-            address — this is required so the block is shippable as-is: the
-            virtual mail service rejects (return-to-sender) any parcel that
-            doesn't carry the registered business name on the label, and most
-            copy-pasters will grab the whole <address> block as the recipient
-            string. Email is included inside <address> too — semantically
-            correct under HTML5, which scopes <address> to contact info
-            generally, not just postal addresses.
+            Canonical contact block. Layout: "Contact Us:" label on the left,
+            address+email block on the right (top-aligned). On mobile (<640px)
+            the label stacks above the address since side-by-side won't fit.
+
+            Uses the semantic <address> element so crawlers, screen readers,
+            and AI systems recognize this as the organization's contact info.
+            "DeFiMind" is the FIRST LINE of the address — this is required so
+            the block is shippable as-is: the virtual mail service rejects
+            (return-to-sender) any parcel that doesn't carry the registered
+            business name on the label, and most copy-pasters will grab the
+            whole <address> block as the recipient string. Email is included
+            inside <address> too — semantically correct under HTML5, which
+            scopes <address> to contact info generally, not just postal
+            addresses.
 
             The same address is asserted as structured data in the root
             layout's JSON-LD Organization → PostalAddress, which is the
@@ -45,24 +49,29 @@ export function Footer() {
 
             `not-italic` overrides the default italic styling of <address>.
           */}
-          <address className="not-italic">
-            <strong className="font-medium text-[var(--color-text-secondary)]">
-              DeFiMind
-            </strong>
-            <br />
-            4949 Canoe Pass Way, Suite 1008
-            <br />
-            Tsawwassen, BC V4M 0B2
-            <br />
-            Canada
-            <br />
-            <a
-              href="mailto:imoore@defimind.ai"
-              className="border-b border-[rgb(107_117_144/0.3)] text-[var(--color-text-secondary)]"
-            >
-              imoore@defimind.ai
-            </a>
-          </address>
+          <div className="flex flex-col items-start gap-2 sm:flex-row sm:gap-6">
+            <div className="shrink-0 font-medium text-[var(--color-text-secondary)]">
+              Contact Us:
+            </div>
+            <address className="not-italic">
+              <strong className="font-medium text-[var(--color-text-secondary)]">
+                DeFiMind
+              </strong>
+              <br />
+              4949 Canoe Pass Way, Suite 1008
+              <br />
+              Tsawwassen, BC V4M 0B2
+              <br />
+              Canada
+              <br />
+              <a
+                href="mailto:imoore@defimind.ai"
+                className="border-b border-[rgb(107_117_144/0.3)] text-[var(--color-text-secondary)]"
+              >
+                imoore@defimind.ai
+              </a>
+            </address>
+          </div>
 
           <p className="pt-4">
             Also building{" "}
